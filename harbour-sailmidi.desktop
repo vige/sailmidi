@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+X-Nemo-Application-Type=silica-qt5
+Icon=harbour-sailmidi
+Exec=harbour-sailmidi
+Name=harbour-sailmidi
+
+[X-Sailjail]
+# Replace with your organization as a reverse domain name
+OrganizationName=org.vige
+# ApplicationName does not have to be identical to Name
+ApplicationName=sailmidi
+# Add the required permissions here
+Permissions=Audio;UserDirs

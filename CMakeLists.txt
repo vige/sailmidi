@@ -1,4 +1,4 @@
-project(sailmidi CXX)
+project(harbour-sailmidi CXX)
 cmake_minimum_required(VERSION 3.5)
 
 find_package (Qt5 COMPONENTS Core Network Qml Gui Quick REQUIRED)
@@ -9,42 +9,49 @@ pkg_search_module(SAILFISH sailfishapp REQUIRED)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-add_executable(sailmidi src/sailmidi.cpp)
-target_compile_definitions(sailmidi PRIVATE
+set(RTMIDI_BUILD_STATIC_LIBS ON)
+
+add_subdirectory(rtmidi)
+
+add_executable(harbour-sailmidi src/sailmidi.cpp src/midiportmodel.cpp src/midiplayer.cpp)
+
+target_link_libraries(harbour-sailmidi rtmidi)
+
+target_compile_definitions(harbour-sailmidi PRIVATE
     $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>
 )
-target_include_directories(sailmidi PRIVATE
+target_include_directories(harbour-sailmidi PRIVATE
     $<BUILD_INTERFACE:
     ${SAILFISH_INCLUDE_DIRS}
 >)
-target_link_libraries(sailmidi
+target_link_libraries(harbour-sailmidi
     Qt5::Quick
     ${SAILFISH_LDFLAGS}
 )
 
-install(TARGETS sailmidi
+install(TARGETS harbour-sailmidi
     RUNTIME DESTINATION bin
 )
 install(DIRECTORY qml
-    DESTINATION share/sailmidi
+    DESTINATION share/harbour-sailmidi
 )
 install(DIRECTORY translations
-    DESTINATION share/sailmidi
+    DESTINATION share/harbour-sailmidi
     FILES_MATCHING PATTERN "*.qm"
 )
-install(FILES sailmidi.desktop
+install(FILES harbour-sailmidi.desktop
     DESTINATION share/applications
 )
-install(FILES icons/86x86/sailmidi.png
+install(FILES icons/86x86/harbour-sailmidi.png
     DESTINATION share/icons/hicolor/86x86/apps
 )
-install(FILES icons/108x108/sailmidi.png
+install(FILES icons/108x108/harbour-sailmidi.png
     DESTINATION share/icons/hicolor/108x108/apps
 )
-install(FILES icons/128x128/sailmidi.png
+install(FILES icons/128x128/harbour-sailmidi.png
     DESTINATION share/icons/hicolor/128x128/apps
 )
-install(FILES icons/172x172/sailmidi.png
+install(FILES icons/172x172/harbour-sailmidi.png
     DESTINATION share/icons/hicolor/172x172/apps
 )
 
@@ -52,7 +59,7 @@ install(FILES icons/172x172/sailmidi.png
 FILE(GLOB TsFiles "translations/*.ts")
 add_custom_target(distfiles
     SOURCES
-        sailmidi.desktop
+        harbour-sailmidi.desktop
         qml/sailmidi.qml
         qml/cover/CoverPage.qml
         qml/pages/FirstPage.qml
@@ -75,5 +82,5 @@ add_custom_target(distfiles
 # Search the Qt Creator Manual to learn about the QtCreatorDeployment.txt file
 # format.
 file(WRITE "${CMAKE_BINARY_DIR}/QtCreatorDeployment.txt"
-    "${CMAKE_INSTALL_PREFIX}\n${CMAKE_BINARY_DIR}/sailmidi:bin\n")
+    "${CMAKE_INSTALL_PREFIX}\n${CMAKE_BINARY_DIR}/harbour-sailmidi:bin\n")
 

@@ -1,11 +1,19 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import Sailfish.Pickers 1.0
+import sailmidi 1.0
 
 Page {
     id: page
 
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.All
+
+    property string selectedFile
+
+    MidiPlayer {
+        id: player
+    }
 
     // To enable PullDownMenu, place our content in a SilicaFlickable
     SilicaFlickable {
@@ -19,25 +27,41 @@ Page {
             }
         }
 
-        // Tell SilicaFlickable the height of its content.
-        contentHeight: column.height
+        SilicaListView {
 
-        // Place our content in a Column.  The PageHeader is always placed at the top
-        // of the page, followed by our content.
-        Column {
-            id: column
+            anchors.fill: parent
 
-            width: page.width
-            spacing: Theme.paddingLarge
-            PageHeader {
-                title: qsTr("UI Template")
+            model: player.portModel
+
+            header: PageHeader {
+                id: header
+                title: "MIDI ports"
             }
-            Label {
-                x: Theme.horizontalPageMargin
-                text: qsTr("Hello Sailors")
-                color: Theme.secondaryHighlightColor
-                font.pixelSize: Theme.fontSizeExtraLarge
+
+            delegate: BackgroundItem {
+                Label {
+                    x: Theme.horizontalPageMargin
+                    text: name
+                }
             }
         }
+
+
+        ValueButton {
+              anchors.centerIn: parent
+              label: "File"
+              value: selectedFile ? selectedFile : "None"
+              onClicked: pageStack.push(filePickerPage)
+        }
+
+        Component {
+              id: filePickerPage
+              FilePickerPage {
+                  nameFilters: [ '*.mid', '*.MID' ]
+                      onSelectedContentPropertiesChanged: {
+                      page.selectedFile = selectedContentProperties.filePath
+                  }
+              }
+         }
     }
 }

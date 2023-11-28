@@ -1,6 +1,6 @@
-Name:       sailmidi
+Name:       harbour-sailmidi
 
-Summary:    My sailmidi application
+Summary:    MIDI controller for Sailfish OS
 Version:    0
 Release:    1
 License:    LICENSE
@@ -15,8 +15,13 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  cmake
 
 %description
-Short description of my Sailfish OS Application
+MIDI controller for Sailfish OS
 
+%package devel
+Summary:    Development files for sailmidi
+
+%description devel
+%{summary}.
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -31,7 +36,6 @@ Short description of my Sailfish OS Application
 %install
 %make_install
 
-
 desktop-file-install --delete-original       \
   --dir %{buildroot}%{_datadir}/applications             \
    %{buildroot}%{_datadir}/applications/*.desktop
@@ -42,3 +46,11 @@ desktop-file-install --delete-original       \
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
+
+%files devel
+%defattr(-,root,root,-)
+%dir %{_includedir}/rtmidi
+%{_includedir}/rtmidi/*.h
+%{_libdir}/pkgconfig/rtmidi.pc
+%dir %{_datadir}/rtmidi
+%{_datadir}/rtmidi/*.cmake

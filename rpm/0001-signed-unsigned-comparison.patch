@@ -1,0 +1,23 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ville Nummela <ville@nummela.org>
+Date: Tue, 28 Nov 2023 13:49:07 +0200
+Subject: [PATCH] signed/unsigned comparison
+
+Signed-off-by: Ville Nummela <ville@nummela.org>
+---
+ RtMidi.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/rtmidi/RtMidi.cpp b/rtmidi/RtMidi.cpp
+index 2216d50d1206d608f0cb80b16a629ea804db8e0f..b90b36477e46bc86895e9d6241a833662f751e38 100644
+--- a/rtmidi/RtMidi.cpp
++++ b/rtmidi/RtMidi.cpp
+@@ -1936,7 +1936,7 @@ static void *alsaMidiHandler( void *ptr )
+           struct timespec y;
+           y.tv_nsec = apiData->lastTime.tv_nsec;
+           y.tv_sec = apiData->lastTime.tv_sec;
+-          if ( x.tv_nsec < y.tv_nsec ) {
++          if ( x.tv_nsec < (unsigned int)y.tv_nsec ) {
+               int nsec = (y.tv_nsec - (int)x.tv_nsec) / 1000000000 + 1;
+               y.tv_nsec -= 1000000000 * nsec;
+               y.tv_sec += nsec;
