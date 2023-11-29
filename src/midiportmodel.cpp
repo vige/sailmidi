@@ -1,13 +1,14 @@
 #include "midiportmodel.h"
 #include "RtMidi.h"
+#include "../modern-midi/src/midi_output.h"
 
-MidiPortModel::MidiPortModel(RtMidiOut* midiOut, QObject* parent)
+MidiPortModel::MidiPortModel(mm::MidiOutput* midiOut, QObject* parent)
+    : m_midiOut(midiOut)
 {
-    std::cout << "MidiPortModel constructor called" << std::endl;
     if (midiOut) {
-        std::cout << "midiOut defined" << std::endl;
-        for (unsigned int i=0; i < midiOut->getPortCount(); i++)
-            m_ports.append(QString::fromStdString(midiOut->getPortName(i)));
+        RtMidiOut* pOutputDevice = midiOut->getOutputDevice();
+        for (unsigned int i=0; i < pOutputDevice->getPortCount(); i++)
+            m_ports.append(QString::fromStdString(pOutputDevice->getPortName(i)));
     }
 }
 

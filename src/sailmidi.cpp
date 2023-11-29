@@ -1,4 +1,5 @@
 #include <sailfishapp.h>
+#include <memory>
 #include <QtQuick>
 #include <QScopedPointer>
 #include "midiportmodel.h"

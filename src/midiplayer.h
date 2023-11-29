@@ -2,9 +2,10 @@
 #define MIDIPLAYER_H
 
 #include <QQuickItem>
+#include <memory>
+#include "../modern-midi/src/midi_output.h"
 
 class MidiPortModel;
-class RtMidiOut;
 
 namespace mm {
     class MidiFileReader;
@@ -32,7 +33,7 @@ private:
     void loadMidiFile();
 
     MidiPortModel* m_midiPortModel;
-    RtMidiOut* m_midiOut;
+    std::unique_ptr<mm::MidiOutput> m_midiOut;
     QString m_midiFile;
     mm::MidiFileReader* m_midiFileReader;
 };

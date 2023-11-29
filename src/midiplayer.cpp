@@ -8,8 +8,8 @@ MidiPlayer::MidiPlayer()
       m_midiFileReader(new mm::MidiFileReader)
 {
     std::cout << "midiplayer constructor called" << std::endl;
-    m_midiOut = new RtMidiOut();
-    m_midiPortModel = new MidiPortModel(m_midiOut);
+    m_midiOut = std::make_unique<mm::MidiOutput>("SailMidi");
+    m_midiPortModel = new MidiPortModel(m_midiOut.get(), this);
 }
 
 MidiPortModel* MidiPlayer::portModel()

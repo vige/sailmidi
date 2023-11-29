@@ -3,7 +3,9 @@
 
 #include <QAbstractListModel>
 
-class RtMidiOut;
+namespace mm {
+    class MidiOutput;
+}
 
 class MidiPortModel : public QAbstractListModel
 {
@@ -13,7 +15,7 @@ public:
         NameRole = Qt::UserRole + 1,
     };
 
-    explicit MidiPortModel(RtMidiOut* midiOut, QObject *parent = 0);
+    explicit MidiPortModel(mm::MidiOutput* midiOut, QObject *parent = 0);
 
     int rowCount(const QModelIndex&) const override { return m_ports.size(); }
     QVariant data(const QModelIndex &index, int role) const override;
@@ -22,6 +24,7 @@ public:
 
 private:
     QVector<QString> m_ports;
+    mm::MidiOutput *m_midiOut;
 };
 
 #endif
