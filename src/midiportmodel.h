@@ -13,6 +13,7 @@ class MidiPortModel : public QAbstractListModel
 public:
     enum PortRoles {
         NameRole = Qt::UserRole + 1,
+        OpenRole
     };
 
     explicit MidiPortModel(mm::MidiOutput* midiOut, QObject *parent = 0);
@@ -21,6 +22,8 @@ public:
     QVariant data(const QModelIndex &index, int role) const override;
 
     QHash<int, QByteArray> roleNames() const override;
+
+    Q_INVOKABLE void openPort(const int i);
 
 private:
     QVector<QString> m_ports;

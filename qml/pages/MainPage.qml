@@ -40,10 +40,18 @@ Page {
                 title: "MIDI ports"
             }
 
-            delegate: BackgroundItem {
+            delegate: ListItem {
                 Label {
                     x: Theme.horizontalPageMargin
                     text: name
+                    highlighted: open
+                }
+
+                menu: ContextMenu {
+                    MenuItem {
+                        text: qsTr("Open")
+                        onClicked: player.portModel.openPort(index)
+                    }
                 }
             }
         }

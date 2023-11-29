@@ -20,6 +20,9 @@ QVariant MidiPortModel::data(const QModelIndex &index, int role) const
     if (role == NameRole) {
         return QVariant(m_ports[index.row()]);
     }
+    if (role == OpenRole) {
+        return QVariant(QString::fromStdString(m_midiOut->info.name) == m_ports[index.row()]);
+    }
     return QVariant();
 }
 
@@ -27,5 +30,12 @@ QHash<int, QByteArray> MidiPortModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles[NameRole] = "name";
+    roles[OpenRole] = "open";
     return roles;
+}
+
+void MidiPortModel::openPort(const int i)
+{
+    m_midiOut->openPort(m_ports[i].toStdString());
+    emit dataChanged(createIndex(i, 0), createIndex(i, 0));
 }
