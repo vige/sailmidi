@@ -5,7 +5,8 @@
 
 MidiPlayer::MidiPlayer()
     : m_midiFile(tr("Select MIDI file")),
-      m_midiFileReader(new mm::MidiFileReader)
+      m_midiFileReader(new mm::MidiFileReader),
+      m_playing(false)
 {
     std::cout << "midiplayer constructor called" << std::endl;
     m_midiOut = std::make_unique<mm::MidiOutput>("SailMidi");
@@ -30,20 +31,31 @@ void MidiPlayer::setMidiFile(const QString& midiFile)
 
 void MidiPlayer::play()
 {
+    if (m_midiFileReader->tracks.empty() || !m_midiOut->getOutputDevice()->isPortOpen())
+        return;
     m_sequencePlayer->loadSingleTrack(m_midiFileReader->tracks[0]);
             // Started Event
     m_sequencePlayer->startedEvent = [&]()
     {
         std::cout << "Notification that the MidiSequencePlayer has started…" << std::endl;
+        m_playing = true;
+        emit playingChanged();
     };
         
     // Stopped Event Callback
     m_sequencePlayer->stoppedEvent = [&]()
-        {
-            std::cout << "Notification that the MidiSequencePlayer has stopped…" << std::endl;
-        };
-        
+    {
+        std::cout << "Notification that the MidiSequencePlayer has stopped…" << std::endl;
+        m_playing = false;
+        emit playingChanged();
+    };
+
     m_sequencePlayer->start();
+}
+
+void MidiPlayer::stop()
+{
+    m_sequencePlayer->stop();
 }
 
 void MidiPlayer::loadMidiFile()

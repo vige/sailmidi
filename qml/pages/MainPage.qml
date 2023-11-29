@@ -20,6 +20,7 @@ Page {
     // To enable PullDownMenu, place our content in a SilicaFlickable
     SilicaFlickable {
         anchors.fill: parent
+        contentHeight: midiColumn.height
 
         // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
         PullDownMenu {
@@ -80,12 +81,21 @@ Page {
             anchors.bottom: parent.bottom
             id: playButton
             icon.source: "image://theme/icon-l-play"
+            visible: !player.playing
             onClicked: player.play()
         }
+
+        IconButton {
+            anchors.bottom: parent.bottom
+            id: stopButton
+            icon.source: "image://theme/icon-m-stop"
+            visible: player.playing
+            onClicked: player.stop()
+        }
+
 
         Label {
             id: errorLabel
         }
-
     }
 }
