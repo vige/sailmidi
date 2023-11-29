@@ -9,10 +9,12 @@ Page {
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.All
 
-    property string selectedFile
-
     MidiPlayer {
         id: player
+
+        onMidiError: {
+            errorLabel.text = errorString
+        }
     }
 
     // To enable PullDownMenu, place our content in a SilicaFlickable
@@ -50,8 +52,10 @@ Page {
         ValueButton {
               anchors.centerIn: parent
               label: "File"
-              value: selectedFile ? selectedFile : "None"
-              onClicked: pageStack.push(filePickerPage)
+              value: player.midiFile;
+              onClicked: {
+                  pageStack.push(filePickerPage)
+              }
         }
 
         Component {
@@ -59,9 +63,14 @@ Page {
               FilePickerPage {
                   nameFilters: [ '*.mid', '*.MID' ]
                       onSelectedContentPropertiesChanged: {
-                      page.selectedFile = selectedContentProperties.filePath
+                      player.midiFile = selectedContentProperties.filePath
                   }
               }
          }
+
+        Label {
+            id: errorLabel
+        }
+
     }
 }

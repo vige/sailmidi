@@ -1,5 +1,5 @@
-project(harbour-sailmidi CXX)
 cmake_minimum_required(VERSION 3.5)
+project(harbour-sailmidi CXX)
 
 find_package (Qt5 COMPONENTS Core Network Qml Gui Quick REQUIRED)
 
@@ -13,7 +13,9 @@ set(RTMIDI_BUILD_STATIC_LIBS ON)
 
 add_subdirectory(rtmidi)
 
-add_executable(harbour-sailmidi src/sailmidi.cpp src/midiportmodel.cpp src/midiplayer.cpp)
+add_executable(harbour-sailmidi src/sailmidi.cpp src/midiportmodel.cpp src/midiplayer.cpp
+                                modern-midi/src/midi_file_reader.cpp
+)
 
 target_link_libraries(harbour-sailmidi rtmidi)
 
