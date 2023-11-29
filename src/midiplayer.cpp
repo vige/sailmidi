@@ -9,6 +9,7 @@ MidiPlayer::MidiPlayer()
 {
     std::cout << "midiplayer constructor called" << std::endl;
     m_midiOut = std::make_unique<mm::MidiOutput>("SailMidi");
+    m_sequencePlayer = std::make_unique<mm::MidiSequencePlayer>(*m_midiOut.get());
     m_midiPortModel = new MidiPortModel(m_midiOut.get(), this);
 }
 
@@ -25,6 +26,24 @@ void MidiPlayer::setMidiFile(const QString& midiFile)
         loadMidiFile();
         emit midiFileChanged();
     }
+}
+
+void MidiPlayer::play()
+{
+    m_sequencePlayer->loadSingleTrack(m_midiFileReader->tracks[0]);
+            // Started Event
+    m_sequencePlayer->startedEvent = [&]()
+    {
+        std::cout << "Notification that the MidiSequencePlayer has started…" << std::endl;
+    };
+        
+    // Stopped Event Callback
+    m_sequencePlayer->stoppedEvent = [&]()
+        {
+            std::cout << "Notification that the MidiSequencePlayer has stopped…" << std::endl;
+        };
+        
+    m_sequencePlayer->start();
 }
 
 void MidiPlayer::loadMidiFile()

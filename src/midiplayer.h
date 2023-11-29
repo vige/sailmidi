@@ -4,6 +4,7 @@
 #include <QQuickItem>
 #include <memory>
 #include "../modern-midi/src/midi_output.h"
+#include "../modern-midi/src/sequence_player.h"
 
 class MidiPortModel;
 
@@ -25,6 +26,8 @@ public:
     QString midiFile() {return m_midiFile;}
     void setMidiFile(const QString& midiFile);
 
+    Q_INVOKABLE void play();
+
 signals:
     void midiFileChanged();
     void midiError(QString errorString);
@@ -34,6 +37,7 @@ private:
 
     MidiPortModel* m_midiPortModel;
     std::unique_ptr<mm::MidiOutput> m_midiOut;
+    std::unique_ptr<mm::MidiSequencePlayer> m_sequencePlayer;
     QString m_midiFile;
     mm::MidiFileReader* m_midiFileReader;
 };

@@ -76,6 +76,13 @@ Page {
               }
          }
 
+        IconButton {
+            anchors.bottom: parent.bottom
+            id: playButton
+            icon.source: "image://theme/icon-l-play"
+            onClicked: player.play()
+        }
+
         Label {
             id: errorLabel
         }
