@@ -31,8 +31,9 @@ Page {
         }
 
         SilicaListView {
+            id: portList
 
-            anchors.fill: parent
+            height: parent.height / 3
 
             model: player.portModel
 
@@ -42,24 +43,19 @@ Page {
             }
 
             delegate: ListItem {
-                Label {
+                Button {
                     x: Theme.horizontalPageMargin
                     text: name
-                    highlighted: open
-                }
-
-                menu: ContextMenu {
-                    MenuItem {
-                        text: qsTr("Open")
-                        onClicked: player.portModel.openPort(index)
-                    }
-                }
+                    color: open ? Theme.highlightColor : Theme.primaryColor
+                    onClicked: player.portModel.openPort(index)
+                }                
             }
         }
 
 
         ValueButton {
-              anchors.centerIn: parent
+            anchors.top:portList.bottom
+//              anchors.centerIn: parent
               label: "File"
               value: player.midiFile;
               onClicked: {
@@ -79,6 +75,9 @@ Page {
 
         IconButton {
             anchors.bottom: parent.bottom
+            width: parent.width / 2
+            height: parent.width / 2
+            x: parent.width / 4
             id: playButton
             icon.source: "image://theme/icon-l-play"
             visible: !player.playing
@@ -87,6 +86,9 @@ Page {
 
         IconButton {
             anchors.bottom: parent.bottom
+            width: parent.width / 2
+            height: parent.width / 2
+            x: parent.width / 4
             id: stopButton
             icon.source: "image://theme/icon-m-stop"
             visible: player.playing
