@@ -36,6 +36,7 @@ QHash<int, QByteArray> MidiPortModel::roleNames() const
 
 void MidiPortModel::openPort(const int i)
 {
+    m_midiOut->closePort();
     m_midiOut->openPort(m_ports[i].toStdString());
-    emit dataChanged(createIndex(i, 0), createIndex(i, 0));
+    emit dataChanged(createIndex(0, 0), createIndex(m_ports.size(), 0));
 }
