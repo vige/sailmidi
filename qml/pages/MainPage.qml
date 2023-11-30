@@ -22,6 +22,13 @@ Page {
         anchors.fill: parent
         contentHeight: midiColumn.height
 
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("About")
+                onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
+            }
+        }
+
         SilicaListView {
             id: portList
 
