@@ -33,7 +33,8 @@ void MidiPlayer::play()
 {
     if (m_midiFileReader->tracks.empty() || !m_midiOut->getOutputDevice()->isPortOpen())
         return;
-    m_sequencePlayer->loadSingleTrack(m_midiFileReader->tracks[0]);
+
+    m_sequencePlayer->loadMultipleTracks(m_midiFileReader->tracks);
             // Started Event
     m_sequencePlayer->startedEvent = [&]()
     {
@@ -70,4 +71,5 @@ void MidiPlayer::loadMidiFile()
     } catch (const std::runtime_error& e) {
         emit midiError(e.what());
     }
+    std::cout << "Loaded " << m_midiFileReader->tracks.size() << " tracks" << std::endl;
 }
