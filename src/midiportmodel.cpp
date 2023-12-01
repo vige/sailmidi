@@ -1,10 +1,30 @@
 #include "midiportmodel.h"
-#include "RtMidi.h"
+#include <filesystem>
+
 #include "../modern-midi/src/midi_output.h"
+#include "../tinymidi/include/rawmidi.h"
 
 MidiPortModel::MidiPortModel(mm::MidiOutput* midiOut, QObject* parent)
     : m_midiOut(midiOut)
 {
+    for (const auto& entry : std::filesystem::directory_iterator("/dev/snd")) {
+        if(entry.path().filename().string().rfind("midi", 0) == 0) {
+            std::cout << "found midi device: " << entry.path().filename().string() << std::endl;
+            snd_rawmidi_info_t info;
+            int fd, fmode; 
+
+            fmode = O_RDWR;
+            fd = rawmidi_open_device(entry.path().c_str(), fmode);
+            if (fd < 0) {
+                continue;
+            }
+
+            memset(&info, 0, sizeof(info));
+            ioctl(fd, SNDRV_RAWMIDI_IOCTL_INFO, &info);
+            std::cout << "device name: " << info.name << std::endl;
+        }
+    }
+    
     if (midiOut) {
         RtMidiOut* pOutputDevice = midiOut->getOutputDevice();
         for (unsigned int i=0; i < pOutputDevice->getPortCount(); i++)
@@ -30,6 +50,7 @@ QHash<int, QByteArray> MidiPortModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles[NameRole] = "name";
+    roles[DeviceRole] = "device";
     roles[OpenRole] = "open";
     return roles;
 }

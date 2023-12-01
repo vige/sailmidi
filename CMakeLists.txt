@@ -9,26 +9,24 @@ pkg_search_module(SAILFISH sailfishapp REQUIRED)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+link_libraries(-lstdc++fs)
+
 set(RTMIDI_BUILD_STATIC_LIBS ON)
 add_subdirectory(rtmidi)
 
-add_library(tinymidi STATIC tinymidi/.libs/libtinymidi.a)
-add_custom_command(
-        OUTPUT tinymidi/.libs/libtinymidi.a
-        COMMAND make
-        WORKING_DIRECTORY tinymidi
-        )
-
 add_executable(harbour-sailmidi src/sailmidi.cpp src/midiportmodel.cpp src/midiplayer.cpp
                                 modern-midi/src/midi_file_reader.cpp modern-midi/src/midi_output.cpp
-                                modern-midi/src/sequence_player.cpp
+                                modern-midi/src/sequence_player.cpp tinymidi/rawmidi.c
 )
 
-target_link_libraries(harbour-sailmidi rtmidi tinymidi)
+target_link_libraries(harbour-sailmidi rtmidi)
 
 target_compile_definitions(harbour-sailmidi PRIVATE
     $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>
 )
+
+target_compile_features(harbour-sailmidi PUBLIC cxx_std_17)
+
 target_include_directories(harbour-sailmidi PRIVATE
     $<BUILD_INTERFACE:
     ${SAILFISH_INCLUDE_DIRS}

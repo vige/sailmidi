@@ -13,6 +13,7 @@ class MidiPortModel : public QAbstractListModel
 public:
     enum PortRoles {
         NameRole = Qt::UserRole + 1,
+        DeviceRole,
         OpenRole
     };
 
