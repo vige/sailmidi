@@ -23,6 +23,7 @@ MidiPortModel::MidiPortModel(mm::MidiOutput* midiOut, QObject* parent)
 
             memset(&info, 0, sizeof(info));
             ioctl(fd, SNDRV_RAWMIDI_IOCTL_INFO, &info);
+            close(fd);
             std::cout << "device name: " << info.name << ":" << info.subname << std::endl;
             QString deviceName((const char*)(info.name));
             deviceName+=":";
