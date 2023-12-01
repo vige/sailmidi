@@ -32,6 +32,10 @@ MidiPortModel::MidiPortModel(mm::MidiOutput* midiOut, QObject* parent)
             m_ports.append(device);
         }
     }
+
+    if (m_ports.size() == 1) {
+        openPort(0);
+    }
     
     // if (midiOut) {
     //     RtMidiOut* pOutputDevice = midiOut->getOutputDevice();
