@@ -1,6 +1,3 @@
-[submodule "rtmidi"]
-	path = rtmidi
-	url = https://github.com/vige/rtmidi.git
 [submodule "modern-midi"]
 	path = modern-midi
 	url = https://github.com/vige/modern-midi.git

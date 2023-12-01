@@ -9,7 +9,7 @@ pkg_search_module(SAILFISH sailfishapp REQUIRED)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-link_libraries(-lstdc++fs)
+link_libraries(-lstdc++fs -lpthread)
 
 add_compile_definitions(MM_TINYMIDI)
 include_directories(tinymidi/include)

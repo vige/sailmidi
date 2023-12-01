@@ -18,12 +18,6 @@ BuildRequires:  cmake
 %description
 MIDI controller for Sailfish OS
 
-%package devel
-Summary:    Development files for sailmidi
-
-%description devel
-%{summary}.
-
 %prep
 %setup -q -n %{name}-%{version}
 
@@ -48,10 +42,3 @@ desktop-file-install --delete-original       \
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
-%files devel
-%defattr(-,root,root,-)
-%dir %{_includedir}/rtmidi
-%{_includedir}/rtmidi/*.h
-%{_libdir}/pkgconfig/rtmidi.pc
-%dir %{_datadir}/rtmidi
-%{_datadir}/rtmidi/*.cmake
