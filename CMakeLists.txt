@@ -12,11 +12,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(RTMIDI_BUILD_STATIC_LIBS ON)
 add_subdirectory(rtmidi)
 
-add_library(tinymidi STATIC IMPORTED)
-
-set_target_properties(tinymidi PROPERTIES
-                               IMPORTED_LOCATION tinymidi/.libs/libtinymidi.a)
-
+add_library(tinymidi STATIC tinymidi/.libs/libtinymidi.a)
 add_custom_command(
         OUTPUT tinymidi/.libs/libtinymidi.a
         COMMAND make
