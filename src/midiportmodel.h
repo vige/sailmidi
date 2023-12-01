@@ -27,7 +27,8 @@ public:
     Q_INVOKABLE void openPort(const int i);
 
 private:
-    QVector<QString> m_ports;
+    typedef QPair<QString, QString> PortDef; // name, device
+    QVector<PortDef> m_ports;
     mm::MidiOutput *m_midiOut;
 };
 
