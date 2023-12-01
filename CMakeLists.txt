@@ -10,15 +10,25 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(RTMIDI_BUILD_STATIC_LIBS ON)
-
 add_subdirectory(rtmidi)
+
+add_library(tinymidi STATIC IMPORTED)
+
+set_target_properties(tinymidi PROPERTIES
+                               IMPORTED_LOCATION tinymidi/.libs/libtinymidi.a)
+
+add_custom_command(
+        OUTPUT tinymidi/.libs/libtinymidi.a
+        COMMAND make
+        WORKING_DIRECTORY tinymidi
+        )
 
 add_executable(harbour-sailmidi src/sailmidi.cpp src/midiportmodel.cpp src/midiplayer.cpp
                                 modern-midi/src/midi_file_reader.cpp modern-midi/src/midi_output.cpp
                                 modern-midi/src/sequence_player.cpp
 )
 
-target_link_libraries(harbour-sailmidi rtmidi)
+target_link_libraries(harbour-sailmidi rtmidi tinymidi)
 
 target_compile_definitions(harbour-sailmidi PRIVATE
     $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>
@@ -65,8 +75,8 @@ add_custom_target(distfiles
         harbour-sailmidi.desktop
         qml/sailmidi.qml
         qml/cover/CoverPage.qml
-        qml/pages/FirstPage.qml
-        qml/pages/SecondPage.qml
+        qml/pages/MainPage.qml
+        qml/pages/AboutPage.qml
         rpm/sailmidi.changes.in
         rpm/sailmidi.changes.run.in
         rpm/sailmidi.spec
