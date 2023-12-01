@@ -1,5 +1,4 @@
 #include "midiplayer.h"
-#include "RtMidi.h"
 #include "midiportmodel.h"
 #include "../modern-midi/src/midi_file_reader.h"
 

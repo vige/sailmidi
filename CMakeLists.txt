@@ -11,9 +11,6 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 link_libraries(-lstdc++fs)
 
-set(RTMIDI_BUILD_STATIC_LIBS ON)
-add_subdirectory(rtmidi)
-
 add_compile_definitions(MM_TINYMIDI)
 include_directories(tinymidi/include)
 
@@ -21,8 +18,6 @@ add_executable(harbour-sailmidi src/sailmidi.cpp src/midiportmodel.cpp src/midip
                                 modern-midi/src/midi_file_reader.cpp modern-midi/src/midi_output.cpp
                                 modern-midi/src/sequence_player.cpp tinymidi/rawmidi.c
 )
-
-target_link_libraries(harbour-sailmidi rtmidi)
 
 target_compile_definitions(harbour-sailmidi PRIVATE
     $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>
