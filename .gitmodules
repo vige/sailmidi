@@ -4,3 +4,6 @@
 [submodule "modern-midi"]
 	path = modern-midi
 	url = https://github.com/vige/modern-midi.git
+[submodule "tinymidi"]
+	path = tinymidi
+	url = https://github.com/vige/tinymidi.git
