@@ -31,7 +31,7 @@ void MidiPlayer::setMidiFile(const QString& midiFile)
 
 void MidiPlayer::play()
 {
-    if (m_midiFileReader->tracks.empty() || !m_midiOut->getOutputDevice()->isPortOpen())
+    if (m_midiFileReader->tracks.empty() || !m_midiOut->isAttached())
         return;
 
     m_sequencePlayer->loadMultipleTracks(m_midiFileReader->tracks);
