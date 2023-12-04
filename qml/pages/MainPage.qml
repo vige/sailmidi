@@ -12,7 +12,6 @@ Page {
     // To enable PullDownMenu, place our content in a SilicaFlickable
     SilicaFlickable {
         anchors.fill: parent
-        contentHeight: midiColumn.height
 
         PullDownMenu {
             MenuItem {
