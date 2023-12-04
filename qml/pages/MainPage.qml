@@ -9,14 +9,6 @@ Page {
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.All
 
-    MidiPlayer {
-        id: player
-
-        onMidiError: {
-            errorLabel.text = errorString
-        }
-    }
-
     // To enable PullDownMenu, place our content in a SilicaFlickable
     SilicaFlickable {
         anchors.fill: parent
