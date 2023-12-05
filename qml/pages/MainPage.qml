@@ -88,6 +88,7 @@ Page {
 
         Label {
             id: errorLabel
+            text: application.errorString
         }
     }
 }

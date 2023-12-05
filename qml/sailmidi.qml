@@ -9,11 +9,13 @@ ApplicationWindow {
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: defaultAllowedOrientations
 
+    property var errorString
+
     MidiPlayer {
         id: player
 
         onMidiError: {
-            errorLabel.text = errorString
+            application.errorString = errorString
         }
     }
 
