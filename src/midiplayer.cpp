@@ -33,7 +33,7 @@ void MidiPlayer::play()
     if (m_midiFileReader->tracks.empty() || !m_midiOut->isAttached())
         return;
 
-    m_sequencePlayer->loadMultipleTracks(m_midiFileReader->tracks);
+    m_sequencePlayer->loadMultipleTracks(m_midiFileReader->tracks, m_midiFileReader->ticksPerBeat, m_midiFileReader->startingTempo);
             // Started Event
     m_sequencePlayer->startedEvent = [&]()
     {
