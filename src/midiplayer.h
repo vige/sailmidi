@@ -16,10 +16,10 @@ class MidiPlayer : public QQuickItem
 {
     Q_OBJECT
 
-    Q_PROPERTY(MidiPortModel * portModel READ portModel)
+    Q_PROPERTY(MidiPortModel * portModel READ portModel CONSTANT)
     Q_PROPERTY(QString midiFile READ midiFile WRITE setMidiFile NOTIFY midiFileChanged)
     Q_PROPERTY(bool playing READ playing NOTIFY playingChanged);
-    Q_PROPERTY(QString sailmidiVersion READ sailmidiVersion)
+    Q_PROPERTY(QString sailmidiVersion READ sailmidiVersion CONSTANT)
 public:
     MidiPlayer();
 
