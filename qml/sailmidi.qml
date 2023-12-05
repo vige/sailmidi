@@ -9,7 +9,7 @@ ApplicationWindow {
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: defaultAllowedOrientations
 
-    property var errorString
+    property string errorString: ""
 
     MidiPlayer {
         id: player
