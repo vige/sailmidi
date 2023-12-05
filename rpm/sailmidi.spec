@@ -23,7 +23,7 @@ MIDI controller for Sailfish OS
 
 %build
 
-%cmake
+%cmake -DSAILMIDI_VERSION=%{version}
 
 %make_build
 

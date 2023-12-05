@@ -25,7 +25,7 @@ Page {
             }
 
             Label {
-                text: "Sailmidi v1.1"
+                text: "Sailmidi v" + player.sailmidiVersion
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.pixelSize:    Theme.fontSizeLarge
             }

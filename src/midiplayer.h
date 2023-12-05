@@ -19,6 +19,7 @@ class MidiPlayer : public QQuickItem
     Q_PROPERTY(MidiPortModel * portModel READ portModel)
     Q_PROPERTY(QString midiFile READ midiFile WRITE setMidiFile NOTIFY midiFileChanged)
     Q_PROPERTY(bool playing READ playing NOTIFY playingChanged);
+    Q_PROPERTY(QString sailmidiVersion READ sailmidiVersion)
 public:
     MidiPlayer();
 
@@ -31,6 +32,7 @@ public:
     Q_INVOKABLE void stop();
 
     bool playing() {return m_playing;}
+    QString sailmidiVersion() {return m_sailmidiVersion;}
     
 signals:
     void midiFileChanged();
@@ -46,6 +48,7 @@ private:
     QString m_midiFile;
     mm::MidiFileReader* m_midiFileReader;
     bool m_playing;
+    QString m_sailmidiVersion;
 };
 
 #endif // MIDIPLAYER_H

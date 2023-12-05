@@ -5,7 +5,8 @@
 MidiPlayer::MidiPlayer()
     : m_midiFile(tr("Select MIDI file")),
       m_midiFileReader(new mm::MidiFileReader),
-      m_playing(false)
+      m_playing(false),
+      m_sailmidiVersion(SAILMIDI_VERSION)
 {
     std::cout << "midiplayer constructor called" << std::endl;
     m_midiOut = std::make_unique<mm::MidiOutput>("SailMidi");
