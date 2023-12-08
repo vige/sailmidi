@@ -67,7 +67,8 @@ void MidiPlayer::loadMidiFile()
             QByteArray fileContents = midiFile.readAll();
             std::vector<uint8_t> fileContentVector(fileContents.begin(),fileContents.end());
             m_midiFileReader->parse(fileContentVector);
-        }
+            emit midiFileLoaded();
+        } else emit midiError("Could not open MIDI file");
     } catch (const std::runtime_error& e) {
         emit midiError(e.what());
     }

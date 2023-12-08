@@ -36,6 +36,7 @@ public:
     
 signals:
     void midiFileChanged();
+    void midiFileLoaded();
     void midiError(QString errorString);
     void playingChanged();
 

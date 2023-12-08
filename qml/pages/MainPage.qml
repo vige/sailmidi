@@ -45,13 +45,12 @@ Page {
 
 
         ValueButton {
+            id: fileButton
             anchors.top:portList.bottom
-//              anchors.centerIn: parent
               label: "File"
               value: player.midiFile;
               onClicked: {
                   pageStack.push(filePickerPage, {}, PageStackAction.Immediate)
-
               }
         }
 
@@ -106,7 +105,9 @@ Page {
 
         Label {
             id: errorLabel
+            anchors.top: fileButton.bottom
             text: application.errorString
+            color: Theme.errorColor
         }
     }
 }

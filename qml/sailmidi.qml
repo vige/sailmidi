@@ -22,9 +22,9 @@ ApplicationWindow {
 
         midiFile: selectedMidiFile.value
 
-        onMidiError: {
-            application.errorString = errorString
-        }
+        onMidiError: application.errorString = errorString
+
+        onMidiFileLoaded: errorString = ""
     }
 
 }
