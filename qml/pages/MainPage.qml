@@ -9,6 +9,7 @@ Page {
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.All
 
+
     // To enable PullDownMenu, place our content in a SilicaFlickable
     SilicaFlickable {
         anchors.fill: parent
@@ -49,16 +50,33 @@ Page {
               label: "File"
               value: player.midiFile;
               onClicked: {
-                  pageStack.push(filePickerPage)
+                  pageStack.push(filePickerPage, {}, PageStackAction.Immediate)
+
               }
         }
 
         Component {
               id: filePickerPage
               FilePickerPage {
+                  id: filePickerPage2
                   nameFilters: [ '*.mid', '*.MID' ]
                       onSelectedContentPropertiesChanged: {
-                      player.midiFile = selectedContentProperties.filePath
+                          selectedMidiFile.value = selectedContentProperties.filePath
+                  }
+                  property bool subPageInitialized: false
+                  onStatusChanged: {
+                      if ((status === PageStatus.Active) && !subPageInitialized && selectedMidiFile.value !== "") {
+                          var path2 = selectedMidiFile.value.substring(0,selectedMidiFile.value.lastIndexOf("/"))
+                          var name2 = path2.substring(path2.lastIndexOf("/") + 1)
+                          // It's unfortunate that FilePickerPage does not have API for selecting starting point,
+                          // this is bound to break at some point
+                          this.children[1].selected({
+                                                    name: name2,
+                                                    iconSource: 'image://theme/icon-m-device',
+                                                    path: path2
+                                                    })
+                          subPageInitialized = true
+                      }
                   }
               }
          }
